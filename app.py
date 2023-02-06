@@ -31,7 +31,7 @@ def main():
     tracks = session.playlist_tracks(PLAYLIST_URI)["items"]
 
     FOLDER_NAME = session.user_playlist(user=None, playlist_id=PLAYLIST_URI, fields="name")["name"]
-    print(FOLDER_NAME)
+    print("Folder Name:" + " " + FOLDER_NAME)
     
 
     path = f"{os.environ['UserProfile']}/Music/" + FOLDER_NAME + "/"
