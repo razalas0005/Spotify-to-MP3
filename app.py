@@ -5,8 +5,7 @@ from pytube import YouTube
 from youtubesearchpython import VideosSearch
 
 def main():
-    # Babaguhin pa to yan muna gagamitin
-    # PLAYLIST_LINK = "https://open.spotify.com/playlist/1vaF88Z5msDzwFfRBa1IyM?si=fd5bf015b8a74445"
+    # PLAYLIST_LINK Example: https://open.spotify.com/playlist/1vaF88Z5msDzwFfRBa1IyM?si=fd5bf015b8a74445
     PLAYLIST_LINK = str(input("Enter Playlist Link from Spotify: "))
 
     # Loading Credentials from .env file
@@ -42,8 +41,6 @@ def main():
     except OSError as error: 
         print(error)
 
-    
-
     # Get the list of artist and songs
     counter = 0
     for track in tracks:
@@ -51,13 +48,14 @@ def main():
             videosSearch = VideosSearch(artist["name"] + " - " + track["track"]["name"], limit = 1)
             yt = YouTube(videosSearch.result()["result"][0]["link"])
             audio_file = yt.streams.filter(only_audio=True).first()
+
+        # Download Songs from YouTube
         try: 
             out_file = audio_file.download(output_path=path, filename='.mp3', filename_prefix=track["track"]["name"] + ' - ' + artist["name"])    
         except OSError as error: 
             print("Failed to Download ("+ artist["name"] + " - " + track["track"]["name"] +")")
             continue
             
-          
         counter += 1
         print(str(counter) + "/" + str(len(tracks)) + " (" + artist["name"] + " - " + track["track"]["name"] +")")
 
